@@ -39,7 +39,7 @@
 			quoteIndex = -1;
 		}
 
-		fetch('/diwali-quotes.json')
+		fetch('diwali-quotes.json')
 			.then(res => res.json())
 			.then(quotesList => {
 				if (quotesList && Array.isArray(quotesList) && quotesList.length > 0) {
