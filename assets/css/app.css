@@ -6,8 +6,6 @@
 html, body {
 	margin: 0;
 	padding: 0;
-	height: 100%;
-	width: 100%;
 }
 
 body {
@@ -24,14 +22,12 @@ body > .page-background {
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 100%;
+	min-height: 100vh;
 	z-index: -1;
 	background-color: #0a0a0a;
-	transform: translateZ(-1px);
 }
 
-.page-content,
-.page-footer {
+.page-content{
 	min-height: 100vh;
 	width: 100%;
 	display: flex;
@@ -40,9 +36,29 @@ body > .page-background {
 	justify-content: center;
 	background: rgba(10, 10, 10, 0.4);
 	color: #fff;
-	/*margin: 2rem;*/
 	padding: 2rem;
-	transform: translateZ(0);
+}
+
+.page-footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 2rem;
+	color: #fff;
+}
+
+.page-footer p {
+	margin: 0 !important;
+}
+
+.page-footer a {
+	color: #ecd600;
+}
+
+.page-footer a:hover {
+	color: #ffe700;
+	text-decoration: underline;
 }
 
 .floating-buttons {
@@ -101,4 +117,12 @@ body > .page-background {
 	justify-content: center;
 	align-items: center;
 	border-radius: 4rem;
+}
+
+body.capturing-screen *.hide-when-capture {
+	display: none !important;
+}
+
+#capturedImageContainer {
+	display: none;
 }

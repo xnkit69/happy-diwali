@@ -26,7 +26,7 @@
 
 		fireworks.start();
 
-		$('#btnToggleFireworkSound').removeClass('is-hidden');
+		$('.show-after-firework-init').removeClass('is-hidden');
 	}
 
 	function showRandomQuote() {
@@ -63,19 +63,15 @@
 
 	function wishFriend() {
 		if (reqParams.has('wishFrom')) {
-			let wishFrom;
+			let wishFrom = reqParams.get('wishFrom');
 
 			try {
-				wishFrom = reqParams.get('wishFrom');
-
 				// Check if name is base64 encoded
 				if (wishFrom === btoa(atob(wishFrom))) {
 					wishFrom = atob(reqParams.get('wishFrom'));
 				}
 			} catch(err) {
 				console.error(err);
-
-				wishFrom = undefined;
 			}
 
 			if (wishFrom && typeof(wishFrom) == 'string' && wishFrom.replace(/\s/g, '').length > 0) {
@@ -203,6 +199,67 @@
 	$(document).on('keypress', '#txtUsername', function(e) {
 		if (e.which == 13) {
 			$('#btnWishFriend').click();
+		}
+	});
+
+	$(document).on('click', '#btnTakeScreenshot', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		if (!$('body').hasClass('capturing-screen')) {
+			$('body').addClass('capturing-screen');
+
+			$('#capturedImageContainer').html('');
+
+			let initialFireworksBoundariesParam = fireworks.boundaries.height;
+			let heightForCapture = $('body')[0].clientHeight;
+
+			// To Capture the background fireworks, set page content height to background
+			$('body > .page-background').css({
+				'height': heightForCapture,
+			});
+
+			fireworks.setOptions({
+				'boundaries': $.extend({}, fireworks.boundaries, {
+					'height': heightForCapture,
+				}),
+			});
+
+			$(window).scrollTop(0);
+
+			try {
+				html2canvas(document.body)
+					.then(canvas => {
+						$('#capturedImageContainer').append(canvas);
+						return canvas;
+					})
+					.then(canvas => {
+						const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+						$('#capturedImageContainer').append(`<a href="${image}" download="Happy-Diwali-Screenshot.png" id="btnDownloadCapturedImage">Download</a>`);
+
+						$('#capturedImageContainer > #btnDownloadCapturedImage')[0].click();
+
+						// Reset background height
+						$('body > .page-background').css({
+							'height': 'auto',
+						});
+
+						fireworks.setOptions({ 'boundaries': initialFireworksBoundariesParam });
+
+						$('body').removeClass('capturing-screen');
+					});
+			} catch(err) {
+				console.error(err);
+
+				// Reset background height
+				$('body > .page-background').css({
+					'height': 'auto',
+				});
+
+				fireworks.setOptions({ 'boundaries': initialFireworksBoundariesParam });
+
+				$('body').removeClass('capturing-screen');
+			}
 		}
 	});
 
