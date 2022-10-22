@@ -114,7 +114,7 @@
 			if (linkParams) {
 				let copyText = location.href.replace(location.search, '') + `?${linkParams}`;
 
-				if (navigator.clipboard) {
+				if (copyText && navigator.clipboard) {
 					btn.addClass('copying');
 
 					navigator.clipboard.writeText(copyText).then(() => {
@@ -183,9 +183,17 @@
 		e.preventDefault();
 		e.stopPropagation();
 
-		onCopyLinkBtnClicked( $(this), ( $('#txtUsername').val() || '' ).substr(0, MAX_USERNAME_LENGTH) );
+		let username = $('#txtUsername').val();
 
-		$('#txtUsername').val('');
+		if (username && username.replace(/\s/g, '').length > 0) {
+			username = username.substr(0, MAX_USERNAME_LENGTH);
+
+			if (username.length > 0) {
+				onCopyLinkBtnClicked( $(this), username );
+
+				$('#txtUsername').val('');
+			}
+		}
 	});
 
 	$(document).on('keyup', '#txtUsername', function(e) {
