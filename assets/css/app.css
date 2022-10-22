@@ -12,6 +12,11 @@ html, body {
 
 body {
 	position: relative;
+	scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+	display: none;
 }
 
 body > .page-background {
@@ -27,7 +32,7 @@ body > .page-background {
 
 .page-content,
 .page-footer {
-	height: 100%;
+	min-height: 100vh;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -35,6 +40,7 @@ body > .page-background {
 	justify-content: center;
 	background: rgba(10, 10, 10, 0.4);
 	color: #fff;
+	/*margin: 2rem;*/
 	padding: 2rem;
 	transform: translateZ(0);
 }
@@ -43,6 +49,10 @@ body > .page-background {
 	position: fixed;
 	bottom: 1rem;
 	right: 0.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 .floating-buttons .button {
@@ -56,10 +66,39 @@ body > .page-background {
 	font-size: 1.5rem;
 }
 
+.floating-buttons .button:not(:last-child) {
+	margin-bottom: 1rem;
+}
+
 .columns {
 	width: 100%;
 }
 
 .diwali-wish {
 	font-family: diwaliWishFont;
+}
+
+#wishingFriend #wishingFriend-name {
+	color: #ecd600 !important;
+	text-decoration: underline;
+}
+
+#wishingFriend .wishing-friend-giftbox {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #000;
+	z-index: 2;
+}
+
+.button-rounded-border {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 4rem;
 }

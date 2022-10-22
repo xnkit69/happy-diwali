@@ -1,5 +1,6 @@
 (function($) {
-	let fireworks, quoteIndex, quote;
+	const MAX_USERNAME_LENGTH = 30, docTitle = 'Happy Diwali';
+	let fireworks, quoteIndex, quote, reqParams;
 
 	function initFireworks(withSoundEffect = false) {
 		let container = document.querySelector('.page-background');
@@ -24,12 +25,12 @@
 		fireworks = new Fireworks(container, options);
 
 		fireworks.start();
+
+		$('#btnToggleFireworkSound').removeClass('is-hidden');
 	}
 
 	function showRandomQuote() {
 		try {
-			let reqParams = new URLSearchParams(location.search);
-
 			if (reqParams.has('quote')) {
 				quoteIndex = parseInt(reqParams.get('quote'));
 			}
@@ -60,10 +61,98 @@
 			.catch(err => { console.error(err) });
 	}
 
+	function wishFriend() {
+		if (reqParams.has('wishFrom')) {
+			let wishFrom;
+
+			try {
+				wishFrom = reqParams.get('wishFrom');
+
+				// Check if name is base64 encoded
+				if (wishFrom === btoa(atob(wishFrom))) {
+					wishFrom = atob(reqParams.get('wishFrom'));
+				}
+			} catch(err) {
+				console.error(err);
+
+				wishFrom = undefined;
+			}
+
+			if (wishFrom && typeof(wishFrom) == 'string' && wishFrom.replace(/\s/g, '').length > 0) {
+				$('#wishingFriend > #wishingFriend-name').html(wishFrom);
+				$('#wishingFriend > .default-wish').addClass('is-hidden');
+				$('#wishingFriend > .wishing-friend').removeClass('is-hidden');
+
+				document.title = docTitle + ' | Wish from: ' + wishFrom;
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function frameShareLinkParam(wishFrom = false) {
+		let param = '';
+
+		if (wishFrom && wishFrom.replace(/\s/g, '').length > 0) {
+			param = `wishFrom=${ btoa(wishFrom) }`;
+		}
+
+		if (quoteIndex && quoteIndex > -1) {
+			param += (param.length > 0 ? '&' : '');
+			param += `quote=${quoteIndex}`;
+		}
+
+		return param;
+	}
+
+	function onCopyLinkBtnClicked(btn, wishFrom = false) {
+		if (!btn.hasClass('copying')) {
+			let linkParams = frameShareLinkParam(wishFrom);
+
+			if (linkParams) {
+				let copyText = location.href.replace(location.search, '') + `?${linkParams}`;
+
+				if (navigator.clipboard) {
+					btn.addClass('copying');
+
+					navigator.clipboard.writeText(copyText).then(() => {
+						btn.children('.before-copy').addClass('is-hidden');
+						btn.children('.after-copied').removeClass('is-hidden');
+
+						setTimeout(() => {
+							btn.children('.after-copied').addClass('is-hidden');
+							btn.children('.before-copy').removeClass('is-hidden');
+
+							btn.removeClass('copying');
+						}, 5000);
+					});
+				}
+			}
+		}
+	}
+
 	$(document).ready(function() {
-		initFireworks();
+		reqParams = new URLSearchParams(location.search);
+
+		let gotWishFromFriend = wishFriend();
 
 		showRandomQuote();
+
+		if (gotWishFromFriend) {
+			setTimeout(() => {
+				initFireworks();
+
+				$('#wishingFriend > .wishing-friend-giftbox').addClass('is-hidden');
+
+				$('body').removeClass('is-clipped');
+			}, 3500);
+		} else {
+			initFireworks();
+
+			$('body').removeClass('is-clipped');
+		}
 	});
 
 	$(document).on('click', '#btnToggleFireworkSound', function(e) {
@@ -87,24 +176,25 @@
 		e.preventDefault();
 		e.stopPropagation();
 
-		if (quoteIndex && quoteIndex > -1 && !$(this).hasClass('copying')) {
-			let copyText = location.href.replace(location.search, '') + `?quote=${quoteIndex}`;
+		onCopyLinkBtnClicked($(this));
+	});
 
-			if (navigator.clipboard) {
-				$(this).addClass('copying');
+	$(document).on('click', '#btnWishFriend', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
 
-				navigator.clipboard.writeText(copyText).then(() => {
-					$(this).children('.before-copy').addClass('is-hidden');
-					$(this).children('.after-copied').removeClass('is-hidden');
+		onCopyLinkBtnClicked( $(this), ( $('#txtUsername').val() || '' ).substr(0, MAX_USERNAME_LENGTH) );
 
-					setTimeout(() => {
-						$(this).children('.after-copied').addClass('is-hidden');
-						$(this).children('.before-copy').removeClass('is-hidden');
+		$('#txtUsername').val('');
+	});
 
-						$(this).removeClass('copying');
-					}, 5000);
-				});
-			}
+	$(document).on('keyup', '#txtUsername', function(e) {
+		$(this).val(($(this).val() || '').substr(0, MAX_USERNAME_LENGTH));
+	});
+
+	$(document).on('keypress', '#txtUsername', function(e) {
+		if (e.which == 13) {
+			$('#btnWishFriend').click();
 		}
 	});
 
