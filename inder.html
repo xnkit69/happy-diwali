@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta name="keywords" content="Happy Diwali, Diwali wish, Crackers">
+
+	<meta name="author" content="Ankit">
+	<meta name="description" content="Happy Diwali to you. Wish your friends nad family!">
+
+	<title>Happy Diwali</title>
+
+	<link rel="icon" href="favicon.ico">
+
+	<link rel="stylesheet" type="text/css" href="assets/css/bulma.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/app.css">
+
+	<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/fireworks.js"></script>
+	<script type="text/javascript" src="assets/js/html2canvas.min.js"></script>
+</head>
+<body class="is-clipped">
+
+	<div class="page-background"></div>
+
+	<div class="page-content">
+		<div class="columns is-centered">
+			<div class="column" id="wishingFriend">
+				<h1 class="title is-1-tablet has-text-white has-text-centered wishing-friend is-hidden" id="wishingFriend-name"></h1>
+				<h1 class="title is-1-tablet has-text-white has-text-centered diwali-wish wishing-friend is-hidden" id="wishingFriend-wish">💥 Wishing you a Happy & Safe Diwali 💥</h1>
+				<div class="wishing-friend wishing-friend-giftbox is-hidden">
+					<img src="assets/images/gift-box.gif" class="image is-centered" style="width: 20rem;">
+				</div>
+				<h1 class="title is-1-tablet has-text-white has-text-centered diwali-wish default-wish">Wish you a Happy Diwali</h1>
+			</div>
+		</div>
+
+		<div class="columns is-centered">
+			<div class="column is-2-tablet">
+				<img src="assets/images/diwali-diya.gif" class="image">
+			</div>
+		</div>
+
+		<div class="columns is-centered is-hidden">
+			<div class="column is-4-tablet">
+				<div class="card">
+					<div class="card-content">
+						<div class="content has-text-centered is-centered" id="diwaliQuote"></div>
+					</div>
+					<footer class="card-footer hide-when-capture">
+						<a href="" target="_blank" class="card-footer-item" id="btnShareDiwaliQuote">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share before-copy"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check after-copied is-hidden"><polyline points="20 6 9 17 4 12"></polyline></svg> <span class="ml-1 after-copied is-hidden">Link copied.</span>
+						</a>
+					</footer>
+				</div>
+			</div>
+		</div>
+
+		<div class="columns has-text-centered is-centered mt-2 hide-when-capture">
+			<div class="column is-6-tablet is-flex is-justify-content-center">
+				<div class="box">
+					<p class="title is-5">Wish your friends</p>
+					<div class="field has-addons">
+						<div class="control">
+							<input class="input is-rounded is-link" type="text" id="txtUsername" placeholder="Enter your name here">
+						</div>
+						<div class="control">
+							<button class="button is-link button-rounded-border" id="btnWishFriend">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send before-copy"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check after-copied is-hidden"><polyline points="20 6 9 17 4 12"></polyline></svg>
+								<span class="ml-1 after-copied is-hidden">Link copied.</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="page-footer hide-when-capture">
+		<div class="content has-text-centered">
+			<p>
+				Designed By <a href="https://www.instagram.com/xnkit69" target="_blank">Ankit</a>
+      </p>
+
+	<div class="floating-buttons hide-when-capture show-after-firework-init is-hidden">
+		<button class="button is-light" id="btnTakeScreenshot" title="Capture">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-camera default-icon"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-volume-x when-captured is-hidden"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+		</button>
+
+		<button class="button is-light" id="btnToggleFireworkSound">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-volume when-unmuted is-hidden"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-volume-x when-muted"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+		</button>
+	</div>
+
+	<div id="capturedImageContainer"></div>
+
+	<script type="text/javascript" src="assets/js/app.js"></script>
+</body>
+</html>
